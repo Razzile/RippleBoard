@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = RipplePrefs;
+	cell = PSLinkCell;
+	detail = RipplePrefsListController;
+	icon = RipplePrefs.png;
+	isController = 1;
+	label = "Ripple Board";
+    };
+}

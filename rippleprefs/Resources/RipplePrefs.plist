@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>RippleBoard Enabled</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>enabled</string>
+			<key>cellClass</key>
+			<string>BlueSwitchTableCell</string>
+			<key>label</key>
+			<string>Enabled</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Round App Icons</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>roundicons</string>
+			<key>label</key>
+			<string>Round Icons</string>
+			<key>cellClass</key>
+			<string>BlueSwitchTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Ripple On App Launch</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>launchripple</string>
+			<key>label</key>
+			<string>Launch Ripple</string>
+			<key>cellClass</key>
+			<string>BlueSwitchTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Ripple On Touch</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>touchripple</string>
+			<key>label</key>
+			<string>Touch Ripple</string>
+			<key>cellClass</key>
+			<string>BlueSwitchTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Running Apps Ripple</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>runningripple</string>
+			<key>label</key>
+			<string>Running Apps</string>
+			<key>cellClass</key>
+			<string>BlueSwitchTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Ripple Range</string>
+		</dict>
+		<dict>
+			<key>alignment</key>
+			<string>3</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>range</string>
+			<key>max</key>
+			<real>5</real>
+			<key>min</key>
+			<real>1</real>
+			<key>showValue</key>
+			<false/>
+			<key>cellClass</key>
+			<string>BlueSliderTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Ripple Duration</string>
+		</dict>
+		<dict>
+			<key>alignment</key>
+			<string>3</string>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<integer>1</integer>
+			<key>defaults</key>
+			<string>com.satori.rippleboard</string>
+			<key>key</key>
+			<string>runningSpeed</string>
+			<key>max</key>
+			<real>4</real>
+			<key>min</key>
+			<real>0.25</real>
+			<key>showValue</key>
+			<false/>
+			<key>cellClass</key>
+			<string>BlueSliderTableCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>respring</string>
+			<key>label</key>
+			<string>Respring to Save Changes</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Extras</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>twitter</string>
+			<key>icon</key>
+			<string>twitter.png</string>
+			<key>label</key>
+			<string>Follow me on Twitter</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>website</string>
+			<key>icon</key>
+			<string>web.png</string>
+			<key>label</key>
+			<string>Visit my Site</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>github</string>
+			<key>icon</key>
+			<string>github.png</string>
+			<key>label</key>
+			<string>View RippleBoard on GitHub</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>paypal</string>
+			<key>icon</key>
+			<string>paypal.png</string>
+			<key>label</key>
+			<string>Show some love</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>footerText</key>
+			<string>Copyright (c) 2015 Satori.</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>RippleBoard</string>
+</dict>
+</plist>
