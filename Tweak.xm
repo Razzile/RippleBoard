@@ -75,12 +75,6 @@ static UIColor *dominantColor(UIImage *image)
 
             CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, image.size.width, image.size.height), image.CGImage);
 
-            // Now that we have the image drawn in our own buffer, we can loop over the pixels to
-            // process it. This simple case simply counts all pixels that have a pure red component.
-
-            // There are probably more efficient and interesting ways to do this. But the important
-            // part is that the pixels buffer can be read directly.
-
             NSUInteger numberOfPixels = image.size.width * image.size.height;
             for (int i=0; i<numberOfPixels; i++) {
                 red += pixels[i].r;
@@ -103,33 +97,12 @@ static UIColor *dominantColor(UIImage *image)
 }
 
 
-/* hooked methods to allow us to round the icons */
-// %hook SBIcon
-//
-// +(id)memoryMappedIconImageForIconImage:(id)iconImage {
-//     return roundedImage(%orig);
-// }
-//
-// %end
-
 %group Hooks
+/* hooked methods to allow us to round the icons */
 %hook SBClockApplicationIconImageView
 
 -(id)contentsImage {
     return roundedImage(%orig);
-}
-
-%end
-/* we also want to round the overlay view that appears when an icon is pressed */
-%hook SBIconImageView
-
--(id)_iconBasicOverlayImage {
-    return roundedImage(%orig);
-}
-
-+ (CGFloat)cornerRadius {
-    NSDictionary *dict = settingsDict();
-    return ([[dict objectForKey:@"roundicons"] boolValue]) ? %orig*2.25 : %orig;
 }
 
 %end
@@ -146,21 +119,19 @@ static UIColor *dominantColor(UIImage *image)
 
 %end
 
-// %hook SBFolderIcon
-//
-// - (id)generateIconImage:(int)arg1 {
-//     return roundedImage(%orig);
-// }
-//
-// - (id)getIconImage:(int)arg1 {
-//     return roundedImage(%orig);
-// }
-//
-// - (id)getGenericIconImage:(int)arg1 {
-//     return roundedImage(%orig);
-// }
-//
-// %end
+/* we also want to round the overlay view that appears when an icon is pressed */
+%hook SBIconImageView
+
+-(id)_iconBasicOverlayImage {
+    return roundedImage(%orig);
+}
+
++ (CGFloat)cornerRadius {
+    NSDictionary *dict = settingsDict();
+    return ([[dict objectForKey:@"roundicons"] boolValue]) ? %orig*2.25 : %orig;
+}
+
+%end
 
 /* slight workaround to disable the image temporarily reverting to normal on launch */
 %hook SBIconImageCrossfadeView
@@ -171,14 +142,6 @@ static UIColor *dominantColor(UIImage *image)
 
 %end
 
-// %hook SBFolderIconImageView
-//
-// + (float)cornerRadius {
-//     NSDictionary *dict = settingsDict();
-//     return ([[dict objectForKey:@"roundicons"] boolValue]) ? 22 : %orig;
-// }
-//
-// %end
 /* create a ripple effect on launch - uses a modified version of RNBRippleEffect found on github */
 %hook SBIconController
 
@@ -243,6 +206,7 @@ static UIColor *dominantColor(UIImage *image)
     }];
 }
 
+/* initialize running app ripples */
 - (id)init {
     [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(beginRipples) userInfo:nil repeats:YES];
     return %orig;
@@ -368,7 +332,7 @@ static UIColor *dominantColor(UIImage *image)
 
 %end
 
-
+/* methods to get when an app i sstarted or closed */
 %hook SBWorkspace
 
 -(void)applicationProcessDidExit:(FBProcess *)applicationProcess withContext:(id)context {
