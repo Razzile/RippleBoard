@@ -1,11 +1,12 @@
+SDKVERSION = 9.2
 ARCHS = armv7 arm64
-include theos/makefiles/common.mk
+include $(THEOS)/makefiles/common.mk
 
 BUNDLE_NAME = RipplePrefs
-RipplePrefs_FILES = RipplePrefs.mm
+RipplePrefs_FILES = RipplePrefs.xm
 RipplePrefs_INSTALL_PATH = /Library/PreferenceBundles
 RipplePrefs_FRAMEWORKS = UIKit QuartzCore CoreGraphics
-RipplePrefs_PRIVATE_FRAMEWORKS = Preferences
+RipplePrefs_PRIVATE_FRAMEWORKS = Preferences SpringBoardServices FrontBoardServices
 ADDITIONAL_OBJCFLAGS = -fobjc-arc
 include $(THEOS_MAKE_PATH)/bundle.mk
 

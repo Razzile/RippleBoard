@@ -5,6 +5,6 @@
 	detail = RipplePrefsListController;
 	icon = RipplePrefs.png;
 	isController = 1;
-	label = "Ripple Board";
+	label = "RippleBoard";
     };
 }

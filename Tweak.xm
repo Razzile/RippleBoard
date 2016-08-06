@@ -11,8 +11,13 @@
 
 #import "Interfaces.h"
 #import "mask.h"
+#import <version.h>
 
-#define rippleBoardPrefPath @"/User/Library/Preferences/com.satori.rippleboard.plist"
+#ifndef kCFCoreFoundationVersionNumber_iOS_9_3
+#define kCFCoreFoundationVersionNumber_iOS_9_3 1280.30
+#endif
+
+#define rippleBoardPrefPath @"/User/Library/Preferences/org.satorify.rippleboard.plist"
 
 NSMutableArray *runningApps;
 
@@ -152,7 +157,12 @@ static UIColor *dominantColor(UIImage *image)
     bool launch = [[dict objectForKey:@"launchripple"] boolValue];
     if (!launch) return %orig;
 
-    UIView *iconView = [[%c(SBIconViewMap) homescreenMap] mappedIconViewForIcon:icon];
+    UIView *iconView;
+    if (IS_IOS_OR_NEWER(iOS_9_3)) {
+        iconView = [[[%c(SBIconController) sharedInstance] homescreenIconViewMap] mappedIconViewForIcon:icon];
+    } else {
+        iconView = [[%c(SBIconViewMap) homescreenMap] mappedIconViewForIcon:icon];
+    }
     if (iconView == nil) return %orig;
     SBIconImageView *iconImageView = MSHookIvar<SBIconImageView *>(iconView, "_iconImageView");
     CGRect pathFrame = CGRectMake(-CGRectGetMidX(iconImageView.bounds), -CGRectGetMidY(iconImageView.bounds), iconImageView.bounds.size.width, iconImageView.bounds.size.height);
@@ -224,7 +234,14 @@ static UIColor *dominantColor(UIImage *image)
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             SBIcon *icon = [self.model applicationIconForBundleIdentifier:bundleID];
-            UIView *iconView = [[%c(SBIconViewMap) homescreenMap] mappedIconViewForIcon:icon];
+            UIView *iconView;
+
+            if (IS_IOS_OR_NEWER(iOS_9_3)) {
+                iconView = [[[%c(SBIconController) sharedInstance] homescreenIconViewMap] mappedIconViewForIcon:icon];
+            } else {
+                iconView = [[%c(SBIconViewMap) homescreenMap] mappedIconViewForIcon:icon];
+            }
+
             if (iconView == nil) return;
             SBIconImageView *iconImageView = MSHookIvar<SBIconImageView *>(iconView, "_iconImageView");
             if (iconImageView == nil) return;
@@ -332,8 +349,35 @@ static UIColor *dominantColor(UIImage *image)
 
 %end
 
-/* methods to get when an app i sstarted or closed */
+/* methods to get when an app is started or closed */
 %hook SBWorkspace
+
+-(void)applicationProcessDidExit:(FBProcess *)applicationProcess withContext:(id)context {
+    NSLog(@"AABB: removed %@", applicationProcess.applicationInfo.bundleIdentifier);
+
+    if (runningApps == nil) {
+        runningApps = [[NSMutableArray alloc] init];
+        return %orig;
+    }
+    if ([runningApps containsObject:applicationProcess.applicationInfo.bundleIdentifier]) {
+        [runningApps removeObject:applicationProcess.applicationInfo.bundleIdentifier];
+    }
+    %orig;
+}
+
+-(void)applicationProcessDidLaunch:(FBProcess *)applicationProcess {
+    if (runningApps == nil) {
+        runningApps = [[NSMutableArray alloc] init];
+    }
+    [runningApps addObject:applicationProcess.applicationInfo.bundleIdentifier];
+    NSLog(@"AABB: %@", applicationProcess.applicationInfo.bundleIdentifier);
+    %orig;
+}
+
+%end
+
+/* methods to get when an app is started or closed (9.3.x) */
+%hook SBMainWorkspace
 
 -(void)applicationProcessDidExit:(FBProcess *)applicationProcess withContext:(id)context {
     NSLog(@"AABB: removed %@", applicationProcess.applicationInfo.bundleIdentifier);
@@ -362,6 +406,7 @@ static UIColor *dominantColor(UIImage *image)
 
 %ctor {
     NSDictionary *dict = settingsDict();
+    NSLog(@"ZZZZ: %@", dict);
     if ([dict[@"enabled"] boolValue]) {
         %init(Hooks);
     }
